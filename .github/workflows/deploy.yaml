@@ -28,7 +28,7 @@ jobs:
            with:
               action: deploy
               strategy: basic
-              namespace: github-bank-of-anthos
+              namespace: github-anthos
               manifests: |
                  extras/jwt/jwt-secret.yaml
 
@@ -37,7 +37,7 @@ jobs:
            with:
               action: deploy
               strategy: basic
-              namespace: github-bank-of-anthos
+              namespace: github-anthos
               manifests: |
                  kubernetes-manifests/accounts-db.yaml
                  kubernetes-manifests/balance-reader.yaml
