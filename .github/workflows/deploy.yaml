@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-   build:
+   deploy:
       runs-on: ubuntu-latest
       steps:
          - name: Checkout master branch
@@ -28,7 +28,7 @@ jobs:
            with:
               action: deploy
               strategy: basic
-              namespace: connor-test
+              namespace: github-bank-of-anthos
               manifests: |
                  extras/jwt/jwt-secret.yaml
 
@@ -37,7 +37,7 @@ jobs:
            with:
               action: deploy
               strategy: basic
-              namespace: connor-test
+              namespace: github-bank-of-anthos
               manifests: |
                  kubernetes-manifests/accounts-db.yaml
                  kubernetes-manifests/balance-reader.yaml
