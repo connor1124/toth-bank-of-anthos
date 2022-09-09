@@ -7,7 +7,15 @@ jobs:
          - name: Checkout master branch
            uses: actions/checkout@master
 
-         - name: Intall kubectl
+         - name: Build Docker images
+           run: |
+             sleep 10
+
+         - name: Push Docker images
+           run: |
+             sleep 10
+
+         - name: Install kubectl
            uses: azure/setup-kubectl@v3.0
 
          - name: Set kubectl context
