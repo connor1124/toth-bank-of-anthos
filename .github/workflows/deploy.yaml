@@ -1,0 +1,42 @@
+on: [push]
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      steps:
+         - uses: actions/checkout@master
+
+         - uses: azure/setup-kubectl@v3.0
+
+         - uses: Azure/k8s-set-context@v3.0
+           with:
+              kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+         - uses: Azure/k8s-deploy@v4.4
+           with:
+              action: deploy
+              strategy: basic
+              namespace: connor-test
+              manifests: |
+                 extras/jwt/jwt-secret.yaml
+
+         - uses: Azure/k8s-deploy@v4.4
+           with:
+              action: deploy
+              strategy: basic
+              namespace: connor-test
+              manifests: |
+                 kubernetes-manifests/accounts-db.yaml
+                 kubernetes-manifests/balance-reader.yaml
+                 kubernetes-manifests/config.yaml
+                 kubernetes-manifests/contacts.yaml
+                 kubernetes-manifests/frontend.yaml
+                 kubernetes-manifests/ledger-db.yaml
+                 kubernetes-manifests/ledger-writer.yaml
+                 kubernetes-manifests/loadgenerator.yaml
+                 kubernetes-manifests/transaction-history.yaml
+                 kubernetes-manifests/userservice.yaml
+            #   images: |
+            #      demo.azurecr.io/k8sdemo:${{ github.sha }}
+            #   imagepullsecrets: |
+            #      demo-k8s-secret
