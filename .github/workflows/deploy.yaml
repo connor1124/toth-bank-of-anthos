@@ -4,15 +4,19 @@ jobs:
    build:
       runs-on: ubuntu-latest
       steps:
-         - uses: actions/checkout@master
+         - name: Checkout master branch
+           uses: actions/checkout@master
 
-         - uses: azure/setup-kubectl@v3.0
+         - name: Intall kubectl
+           uses: azure/setup-kubectl@v3.0
 
-         - uses: Azure/k8s-set-context@v3.0
+         - name: Set kubectl context
+           uses: Azure/k8s-set-context@v3.0
            with:
               kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-         - uses: Azure/k8s-deploy@v4.4
+         - name: Deploy jwt-secret to k8s
+           uses: Azure/k8s-deploy@v4.4
            with:
               action: deploy
               strategy: basic
@@ -20,7 +24,8 @@ jobs:
               manifests: |
                  extras/jwt/jwt-secret.yaml
 
-         - uses: Azure/k8s-deploy@v4.4
+         - name: Deploy Application to k8s and make sure they are in a ready state
+           uses: Azure/k8s-deploy@v4.4
            with:
               action: deploy
               strategy: basic
@@ -36,7 +41,3 @@ jobs:
                  kubernetes-manifests/loadgenerator.yaml
                  kubernetes-manifests/transaction-history.yaml
                  kubernetes-manifests/userservice.yaml
-            #   images: |
-            #      demo.azurecr.io/k8sdemo:${{ github.sha }}
-            #   imagepullsecrets: |
-            #      demo-k8s-secret
